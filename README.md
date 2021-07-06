@@ -1,6 +1,6 @@
-# Exploring-R-datasets
+# Exploring R datasets
 
-This project aims to explore non-timeseries datasets in R datasets package.
+This project aims to explore non-timeseries datasets in R `datasets` package.
 
 | # | Dataset    | Number of Instances | Number of Attributes | Numerical Attributes | Categorical Attributes | Missing Data | Link    |
 |---|------------|---------------------|----------------------|----------------------|------------------------|--------------|---------|
