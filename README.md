@@ -11,3 +11,6 @@ This project aims to explore non-timeseries datasets in R `datasets` package.
 | 5 | `beaver1`     | 114               | 4                  | 4                  | 0                    | No         |            -             |
 | 6 | `beaver2`     | 100               | 4                  | 4                  | 0                    | No         |            -             |
 | 7 | `BOD`         | 6                 | 2                  | 2                  | 0                    | No         |            -             |
+| 8 | `cars`        | 50                | 2                  | 2                  | 0                    | No         |            -             |
+| 9 | `ChickWeight` | 578               | 4                  | 2                  | 2                    | No         |            -             |
+| 10| `chickwts`    | 71                | 2                  | 1                  | 1                    | No         |            -             |
