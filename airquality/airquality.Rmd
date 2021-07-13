@@ -6,6 +6,7 @@ output: html_document
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
 library(tidyverse)
 library(janitor)
+library(visdat)
 library(patchwork)
 
 ggplot2::theme_set(theme_bw())
@@ -47,6 +48,11 @@ skimr::skim(air_quality)
 ## Univariate graphical
 
 ```{r}
+vis_dat(air_quality)
+```
+
+
+```{r}
 p1 <- ggplot(air_quality, aes(ozone)) +
   geom_histogram(color = "white")
 p1
@@ -73,5 +79,74 @@ p4
 
 ```{r}
 (p1 + p2) / (p3 + p4)
+```
+
+```{r}
+vis_cor(air_quality)
+```
+
+
+```{r}
+air_quality <- air_quality %>% 
+  mutate(
+    date = lubridate::make_date(year = 1973, month = month, day = day) 
+  )
+air_quality
+```
+
+```{r}
+ggplot(air_quality, aes(date, ozone)) +
+  geom_line()
+```
+
+```{r}
+ggplot(air_quality, aes(temp, ozone)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+```{r}
+air_quality_imputed <- simputation::impute_lm(air_quality, ozone ~ temp)
+```
+
+```{r}
+air_quality_imputed <- simputation::impute_lm(air_quality_imputed, solar_r ~ temp + ozone)
+```
+
+```{r}
+vis_dat(air_quality_imputed)
+```
+
+```{r}
+# ozone before and after imputation
+before1 <- ggplot(air_quality, aes(temp, ozone)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+
+before2 <- ggplot(air_quality, aes(ozone)) +
+  geom_histogram(aes(y = ..density..), color = "white") +
+  geom_density(color = "red")
+
+after1 <- ggplot(air_quality_imputed, aes(temp, ozone)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+
+after2 <- ggplot(air_quality_imputed, aes(ozone)) +
+  geom_histogram(aes(y = ..density..), color = "white") +
+  geom_density(color = "red")
+
+(before1 + after1) / (before2 + after2)
+```
+
+```{r}
+ggplot(air_quality_imputed, aes(date, ozone)) +
+  geom_line() +
+  facet_wrap(~month, scale = "free")
+```
+
+```{r}
+ggplot(air_quality_imputed, aes(date)) +
+  geom_line(aes(y = ozone), color = "red") +
+  geom_line(data = air_quality, aes(y = ozone))
 ```
 
