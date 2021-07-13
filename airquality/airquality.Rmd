@@ -95,6 +95,12 @@ air_quality
 ```
 
 ```{r}
+air_quality %>% 
+  summarize(sum(ozone < 0, na.rm = TRUE))
+```
+
+
+```{r}
 ggplot(air_quality, aes(date, ozone)) +
   geom_line()
 ```
@@ -137,6 +143,8 @@ after2 <- ggplot(air_quality_imputed, aes(ozone)) +
 
 (before1 + after1) / (before2 + after2)
 ```
+
+Negative ozone levels after imputation
 
 ```{r}
 ggplot(air_quality_imputed, aes(date, ozone)) +
