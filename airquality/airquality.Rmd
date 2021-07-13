@@ -5,7 +5,10 @@ output: html_document
 
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
 library(tidyverse)
+library(janitor)
+library(patchwork)
 
+ggplot2::theme_set(theme_bw())
 ```
 
 # About `airquality`
@@ -13,18 +16,62 @@ library(tidyverse)
 This data set contains the daily air quality measurements in New York, May to September 1973.
 
 ```{r}
-airq <- airquality
+air_quality <- clean_names(airquality)
+head(air_quality)
 ```
 
 ```{r}
-dim(airq)
+dim(air_quality)
 ```
 
 ```{r}
-colnames(airq)
+colnames(air_quality)
 ```
 
 ```{r}
-glimpse(airq)
+glimpse(air_quality)
+```
+
+# Exploratory Data Analysis
+
+## Univariate non-graphical
+
+```{r}
+summary(air_quality)
+```
+
+```{r}
+skimr::skim(air_quality)
+```
+
+## Univariate graphical
+
+```{r}
+p1 <- ggplot(air_quality, aes(ozone)) +
+  geom_histogram(color = "white")
+p1
+```
+
+```{r}
+p2 <- ggplot(air_quality, aes(solar_r)) +
+  geom_histogram(color = "white")
+p2
+```
+
+```{r}
+p3 <- ggplot(air_quality, aes(wind)) +
+  geom_histogram(color = "white")
+p3
+```
+
+```{r}
+p4 <- ggplot(air_quality, aes(temp)) +
+  geom_histogram(color = "white")
+p4
+```
+
+
+```{r}
+(p1 + p2) / (p3 + p4)
 ```
 
