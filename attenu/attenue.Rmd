@@ -1,0 +1,14 @@
+---
+title: "attenu"
+output: html_document
+---
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(janitor)
+library(visdat)
+library(patchwork)
+
+knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
+ggplot2::theme_set(theme_bw())
+```
