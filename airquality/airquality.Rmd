@@ -1,6 +1,9 @@
 ---
 title: "airquality"
-output: html_document
+output:
+  pdf_document: 
+    latex_engine: xelatex
+  html_document: default
 ---
 
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
@@ -9,6 +12,7 @@ library(janitor)
 library(visdat)
 library(patchwork)
 
+knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 ggplot2::theme_set(theme_bw())
 ```
 
@@ -112,11 +116,15 @@ ggplot(air_quality, aes(temp, ozone)) +
 ```
 
 ```{r}
+# Simple linear regression imputation
 air_quality_imputed <- simputation::impute_lm(air_quality, ozone ~ temp)
+air_quality_imputed <- simputation::impute_lm(air_quality_imputed, solar_r ~ temp + ozone)
 ```
 
 ```{r}
-air_quality_imputed <- simputation::impute_lm(air_quality_imputed, solar_r ~ temp + ozone)
+# Random forest imputation
+air_quality_imputed2 <- simputation::impute_cart(air_quality, ozone ~ temp + wind + date)
+air_quality_imputed2 <- simputation::impute_cart(air_quality_imputed2, solar_r ~ ozone + temp + wind + date)
 ```
 
 ```{r}
@@ -147,9 +155,36 @@ after2 <- ggplot(air_quality_imputed, aes(ozone)) +
 Negative ozone levels after imputation
 
 ```{r}
-ggplot(air_quality_imputed, aes(date, ozone)) +
+after3 <- ggplot(air_quality_imputed2, aes(temp, ozone)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+
+after4 <- ggplot(air_quality_imputed2, aes(ozone)) +
+  geom_histogram(aes(y = ..density..), color = "white") +
+  geom_density(color = "red")
+
+(before1 + after1 + after3) / (before2 + after2 + after4)
+```
+
+```{r}
+by_time <- ggplot(air_quality_imputed, aes(date, ozone)) +
+  geom_line(color = "#5D8AA8")
+
+by_month <- ggplot(air_quality_imputed, aes(date, ozone)) +
   geom_line() +
-  facet_wrap(~month, scale = "free")
+  facet_wrap(~lubridate::month(date, label = TRUE), scale = "free")
+
+by_time / by_month
+```
+```{r}
+by_time2 <- ggplot(air_quality_imputed2, aes(date, ozone)) +
+  geom_line(color = "#5D8AA8")
+
+by_month2 <- ggplot(air_quality_imputed2, aes(date, ozone)) +
+  geom_line() +
+  facet_wrap(~lubridate::month(date, label = TRUE), scale = "free")
+
+by_time2 / by_month2
 ```
 
 ```{r}
