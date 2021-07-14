@@ -1,9 +1,9 @@
 ---
 title: "airquality"
 output:
+  html_document: default
   pdf_document: 
     latex_engine: xelatex
-  html_document: default
 ---
 
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
@@ -135,35 +135,65 @@ vis_dat(air_quality_imputed)
 # ozone before and after imputation
 before1 <- ggplot(air_quality, aes(temp, ozone)) +
   geom_point() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    x = "Temperature (F)",
+    y = "Ozone (ppb)",
+    title = "Original"
+  )
 
 before2 <- ggplot(air_quality, aes(ozone)) +
   geom_histogram(aes(y = ..density..), color = "white") +
-  geom_density(color = "red")
+  geom_density(color = "red") +
+  labs(
+    x = "Ozone (ppb)"
+  )
 
 after1 <- ggplot(air_quality_imputed, aes(temp, ozone)) +
   geom_point() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    x = "Temperature (F)",
+    y = "Ozone (ppb)",
+    title = "Simple Linear Regression imputed"
+  )
 
 after2 <- ggplot(air_quality_imputed, aes(ozone)) +
   geom_histogram(aes(y = ..density..), color = "white") +
-  geom_density(color = "red")
+  geom_density(color = "red") +
+  labs(
+    x = "Ozone (ppb)"
+  )
 
 (before1 + after1) / (before2 + after2)
 ```
 
 Negative ozone levels after imputation
 
-```{r}
+```{r, fig.width = 12, fig.asp = 0.618, out.width = "70%", fig.align = "center"}
 after3 <- ggplot(air_quality_imputed2, aes(temp, ozone)) +
   geom_point() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    x = "Temperature (F)",
+    y = "Ozone (ppb)",
+    title = "CART imputed"
+  )
 
 after4 <- ggplot(air_quality_imputed2, aes(ozone)) +
   geom_histogram(aes(y = ..density..), color = "white") +
-  geom_density(color = "red")
+  geom_density(color = "red") +
+  labs(
+    x = "Ozone (ppb)"
+  )
 
-(before1 + after1 + after3) / (before2 + after2 + after4)
+patch <- (before1 / before2) | (after1 / after2) | (after3 / after4)  
+
+ready <- patch + plot_annotation(
+  title = "Comparing original to imputed data",
+  subtitle = "Simple Linear Regression vs CART",
+)
+ready
 ```
 
 ```{r}
