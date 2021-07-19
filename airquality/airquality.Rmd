@@ -54,34 +54,30 @@ skimr::skim(air_quality)
 ```{r}
 vis_dat(air_quality)
 ```
+```{r}
+# using base R graphics
+par(mfrow = c(2, 2))
+hist(air_quality$ozone, xlab = "ozone")
+hist(air_quality$solar_r, xlab = "solar_r")
+hist(air_quality$temp, xlab = "temp")
+hist(air_quality$wind, xlab = "wind")
+```
 
 
 ```{r}
+# using ggplot2
 p1 <- ggplot(air_quality, aes(ozone)) +
   geom_histogram(color = "white")
-p1
-```
 
-```{r}
 p2 <- ggplot(air_quality, aes(solar_r)) +
   geom_histogram(color = "white")
-p2
-```
 
-```{r}
-p3 <- ggplot(air_quality, aes(wind)) +
+p3 <- ggplot(air_quality, aes(temp)) +
   geom_histogram(color = "white")
-p3
-```
 
-```{r}
-p4 <- ggplot(air_quality, aes(temp)) +
+p4 <- ggplot(air_quality, aes(wind)) +
   geom_histogram(color = "white")
-p4
-```
 
-
-```{r}
 (p1 + p2) / (p3 + p4)
 ```
 

@@ -1,5 +1,9 @@
 # Exploring R datasets
 
+> It is important to understand what you CAN DO before you learn to measure how WELL you seem to have DONE it.
+>
+> `r tufte::quote_footer('--- John W. Tukey')`
+
 This project aims to explore non-timeseries datasets in R `datasets` package.
 
 ## Strategy
