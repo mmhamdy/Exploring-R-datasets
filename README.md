@@ -2,7 +2,7 @@
 
 > It is important to understand what you CAN DO before you learn to measure how WELL you seem to have DONE it.
 >
-> <div align = "right"> **John W. Tukey** </div>
+> <div align = "right"> <b> John W. Tukey </b> </div>
 
 This project aims to explore non-timeseries datasets in R `datasets` package.
 
