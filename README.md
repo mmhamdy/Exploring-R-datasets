@@ -21,3 +21,5 @@ This project aims to explore non-timeseries datasets in R `datasets` package.
 | 8 | `cars`        | 50                | 2                  | 2                  | 0                    | No         |[cars](/cars)              |
 | 9 | `ChickWeight` | 578               | 4                  | 2                  | 2                    | No         |[ChickWeight](/ChickWeight)|
 | 10| `chickwts`    | 71                | 2                  | 1                  | 1                    | No         |[chickwts](/chickwts)      |
+| 11| `CO2`         | 84                | 5                  | 2                  | 3                    | No         |[CO2]()                    |
+
