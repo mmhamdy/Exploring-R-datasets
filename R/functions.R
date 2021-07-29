@@ -10,7 +10,7 @@ df_info <- function(df){
     variables = dim[[2]],
     numeric = numeric_var,
     categorical = cat_var,
-    missing_data = missing_any
+    missing_data = ifelse(missing_any == TRUE, "present", "absent")
   )
   
   return(info)
