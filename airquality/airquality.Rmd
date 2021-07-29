@@ -14,11 +14,17 @@ library(patchwork)
 
 knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 ggplot2::theme_set(theme_bw())
+
+source(file = here::here("R","functions.R"))
 ```
 
 # About `airquality`
 
 This data set contains the daily air quality measurements in New York, May to September 1973.
+```{r}
+df_info(airquality)
+```
+
 
 ```{r}
 air_quality <- clean_names(airquality)
